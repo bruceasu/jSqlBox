@@ -15,7 +15,7 @@ import test.TestBase;
  * lines String, Note:<br/>
  * 1) Use formatter off to shut off Eclipse's formatter <br/>
  * 2) Copy source file SqlTemplate.java in class root folder, i.e. Maven's
- * resources folder.
+ * resources folder, and change name to SqlTemplate.sql
  * 
  * @author Yong Zhu
  * @version 1.0.0
