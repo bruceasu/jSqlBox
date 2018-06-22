@@ -38,7 +38,7 @@ jSqlBox有Java6和Java8两个版本。
 
 # 文档 | Documentation
 
-[中文](../../wikis)  |  [English](https://github.com/drinkjava2/jSqlBox/wiki) | [JavaDoc](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jsqlbox%22)
+[中文](https://gitee.com/drinkjava2/jSqlBox/wikis/pages)  |  [English](https://github.com/drinkjava2/jSqlBox/wiki) | [JavaDoc](http://search.maven.org/#search%7Cga%7C1%7Ca%3A%22jsqlbox%22)
 
 # 应用示例 | Demo
 
