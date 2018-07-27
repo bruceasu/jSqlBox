@@ -16,25 +16,17 @@
 package com.github.drinkjava2.jdbpro;
 
 /**
- * Special SQL Item Preparer
+ * Sql Operation Type
  * 
  * @author Yong Zhu
  * @since 1.7.0.3
  */
-public interface SpecialSqlItemPreparer {
+public interface CustomizedSqlItem {
 	/**
 	 * Prepare special SQL items
 	 * 
 	 * @param ps
 	 *            PreparedSQL instance
-	 * @param sql
-	 *            The StringBuilder instance used to build SQL
-	 * @param item
-	 *            The SpecialSqlItem instance
-	 * 
-	 * @return True if this SpecialSqlItem can be handled, otherwise return false to
-	 *         let system know to find other SpecialSqlItemPreparers to handle this
-	 *         item
 	 */
-	public boolean doPrepare(PreparedSQL ps, StringBuilder sql, SpecialSqlItem item);
+	public void doPrepare(PreparedSQL ps);
 }
