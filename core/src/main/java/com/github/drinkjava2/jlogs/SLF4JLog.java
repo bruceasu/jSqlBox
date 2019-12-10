@@ -13,30 +13,36 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.drinkjava2.jdbpro.log;
+package com.github.drinkjava2.jlogs;
 
 import java.lang.reflect.Method;
 
 import com.github.drinkjava2.jdbpro.DbProException;
 
 /**
- * DbProSLF4JLog use SLF4J Log output, to use it, need put a file
- * “DbProLog.properties” in main/resources folder with below:
- * log=com.github.drinkjava2.jdbpro.log.DbProSLF4JLog
+ * SLF4JLog use SLF4J Log output, to use it, need put a file “jlogs.properties”
+ * in main/resources or test/resources folder with below line:
+ * log=com.github.drinkjava2.jlogs.SLF4JLog
  * 
- * And of cause, if use this Logger, related SLF4J Log jars are needed
+ * And of cause, if use this SLF4JLog Logger, related SLF4J dependencies need
+ * added in pom.xml
+ * 
+ * Please note: this SLF4JLog is only used inside of DbUtil-Plus for debugging
+ * purpose, not recommended to use in application.
  * 
  * @author Yong Zhu
  * @since 2.0.5
  */
-public class DbProSLF4JLog implements DbProLog {
+public class SLF4JLog implements Log {
 	private Object logger;
 	private Method info;
 	private Method debug;
-	private Method warn, warnExp;
-	private Method error, errorExp;
+	private Method warn;
+	private Method warnExp;
+	private Method error;
+	private Method errorExp;
 
-	public DbProSLF4JLog(Class<?> targetClass) {
+	public SLF4JLog(Class<?> targetClass) {
 		try {
 			Class<?> logFactoryClass = Class.forName("org.slf4j.LoggerFactory");
 			Method method = logFactoryClass.getMethod("getLogger", Class.class);

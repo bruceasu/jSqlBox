@@ -36,7 +36,7 @@ public abstract class DialectLogFactory {// NOSONAR
 	 * empty, use default DbProPrinterLog
 	 */
 	public static DialectLog getLog(Class<?> clazz) {
-		if (dbProLogClass == void.class)
+		if (dbProLogClass == void.class)// Initialized but not found config file
 			return new DialectPrintLog(clazz);
 
 		if (dbProLogClass != null)

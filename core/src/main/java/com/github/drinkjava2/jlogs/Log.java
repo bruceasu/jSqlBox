@@ -13,22 +13,20 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.drinkjava2.jdbpro.log;
+package com.github.drinkjava2.jlogs;
 
 /**
- * DbProLog used for jDbPro and DbUtil-Plus project, if a "DbProLog.properties" file
- * if found on class root folder (main/resources), will try load the designated
- * DbProLog implementation, otherwise use default DbProPrintLog as log output.
- * <br/>
+ * JLog used for inside of DbUtil-Plus project, if a "JLog.properties" file if
+ * found on class root folder (main/resources), will try load the designated
+ * JLog implementation, otherwise use default EmptyLog<br/>
  * 
- * An example of "DbProLog.properties": <br/>
- * log=com.github.drinkjava2.jdbpro.log.DbProSLF4JLog
- * 
+ * An example of "jlogs.properties": <br/>
+ * log=com.github.drinkjava2.jlogs.ConsoleLog
  * 
  * @author Yong Zhu
  * @since 2.0.5
  */
-public interface DbProLog {
+public interface Log {
 
 	public void info(String msg);
 

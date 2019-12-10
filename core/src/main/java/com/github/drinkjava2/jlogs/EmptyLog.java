@@ -13,63 +13,42 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.github.drinkjava2.jdbpro.log;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
+package com.github.drinkjava2.jlogs;
 
 /**
- * DbProPrintLog is the default logger of jDbPro and DbUtil-Plus project
+ * EmptyLog is the default logger of DbUtil-Plus project
  * 
  * @author Yong Zhu
  * @since 1.7.0
  */
-public class DbProPrintLog implements DbProLog {
-	Class<?> clazz;
+@SuppressWarnings("all")
+public class EmptyLog implements Log {
 
-	public DbProPrintLog(Class<?> clazz) {
-		this.clazz = clazz;
+	public EmptyLog(Class<?> clazz) {
 	}
 
 	@Override
 	public void info(String msg) {
-		System.out.println(msg);// NOSONAR
 	}
 
 	@Override
 	public void warn(String msg) {
-		System.out.println(msg);// NOSONAR
 	}
 
 	@Override
 	public void warn(String msg, Throwable t) {
-		System.out.println(msg + getStackTrace(t));
 	}
 
 	@Override
 	public void error(String msg) {
-		System.out.println(msg);// NOSONAR
+
 	}
 
 	@Override
 	public void error(String msg, Throwable t) {
-		System.out.println(msg + getStackTrace(t));
 	}
 
 	@Override
 	public void debug(String msg) {
-		System.out.println(msg);// NOSONAR
 	}
-
-	public static String getStackTrace(Throwable t) {
-		StringWriter sw = new StringWriter();
-		PrintWriter pw = new PrintWriter(sw);
-		try {
-			t.printStackTrace(pw);
-			return sw.toString();
-		} finally {
-			pw.close();
-		}
-	}
-
 }
