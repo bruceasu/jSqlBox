@@ -16,8 +16,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Map;
 
+import java.util.Set;
 import javax.sql.DataSource;
 
 import com.github.drinkjava2.jdialects.model.TableModel;
@@ -25,11 +28,20 @@ import com.github.drinkjava2.jdialects.model.TableModel;
 /**
  * This utility tool to translate Entity class / Database metaData / Excel(will
  * add in future) file to TableModel
- * 
+ *
  * @author Yong Zhu
  * @since 1.0.5
  */
 public abstract class TableModelUtils {// NOSONAR
+	public static final String OPT_LINK_STYLE       = "linkStyle";
+	public static final String OPT_FIELD_FLAGS      = "fieldFlags";
+	public static final String OPT_PACKAGE_NAME     = "packageName";
+	public static final String OPT_IMPORTS          = "imports";
+	public static final String OPT_CLASS_DEFINITION = "classDefinition";
+	public static final String OPT_ACTIVE_ENTITY    = "activeEntity";
+	public static final String OPT_ACTIVE_RECORD    = "activeRecord";
+	public static final String OPT_PUBLIC_FIELD     = "enablePublicField";
+	public static final String OPT_FILTER_MODELS    = "filterModels";
 
 	/**
 	 * Convert tableName to entity class, note: before use this method
@@ -70,7 +82,7 @@ public abstract class TableModelUtils {// NOSONAR
 
 	/**
 	 * Read database structure and write them to Java entity class source code
-	 * 
+	 *
 	 * @param ds
 	 *            The DataSource instance
 	 * @param dialect
@@ -81,14 +93,30 @@ public abstract class TableModelUtils {// NOSONAR
 	 *            see TableModelUtilsOfJavaSrc.modelToJavaSourceCode() method
 	 */
 	public static void db2JavaSrcFiles(DataSource ds, Dialect dialect, String outputfolder,
-			Map<String, Object> setting) {
+	                                   Map<String, Object> setting) {
 		Connection conn = null;
 		try {
 			conn = ds.getConnection();
 			TableModel[] models = db2Models(conn, dialect);
+			File dir = new File(outputfolder);
+			if (!dir.exists()) {
+				dir.mkdirs();
+			}
+			Collection<String> filterModels = (Collection<String>)setting.get(OPT_FILTER_MODELS);
+			if (filterModels != null) {
+				Set<String> t = new HashSet<>();
+				for(String s : filterModels) {
+					t.add(s.trim().toLowerCase());
+				}
+				filterModels = t;
+			}
 			for (TableModel model : models) {
-				File writename = new File(
-						outputfolder + "/" + TableModelUtilsOfJavaSrc.getClassNameFromTableModel(model) + ".java");
+				String tableName = model.getTableName();
+				if (filterModels != null && filterModels.contains(tableName.toLowerCase())) {
+					continue;
+				}
+				File writename = new File(dir,  TableModelUtilsOfJavaSrc.getClassNameFromTableModel(model) + ".java");
+
 				writename.createNewFile();// NOSONAR
 				BufferedWriter out = new BufferedWriter(new FileWriter(writename));
 				String javaSrc = model2JavaSrc(model, setting);
@@ -108,7 +136,7 @@ public abstract class TableModelUtils {// NOSONAR
 
 	/**
 	 * Convert a TablemModel instance to Java entity class source code
-	 * 
+	 *
 	 * @param model
 	 *            The TableModel instance
 	 * @param setting
